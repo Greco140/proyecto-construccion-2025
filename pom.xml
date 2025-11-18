@@ -99,24 +99,6 @@
         	<version>2.0.27</version>
     	</dependency>
 		<dependency>
-<<<<<<< HEAD
-			<groupId>io.jsonwebtoken</groupId>
-			<artifactId>jjwt-api</artifactId>
-			<version>0.11.5</version>
-		</dependency>
-		<dependency>
-			<groupId>io.jsonwebtoken</groupId>
-			<artifactId>jjwt-impl</artifactId>
-			<version>0.11.5</version>
-			<scope>runtime</scope>
-		</dependency>
-		<dependency>
-			<groupId>io.jsonwebtoken</groupId>
-			<artifactId>jjwt-jackson</artifactId>
-			<version>0.11.5</version>
-			<scope>runtime</scope>
-		</dependency>
-=======
             <groupId>io.jsonwebtoken</groupId>
             <artifactId>jjwt-api</artifactId>
             <version>0.11.5</version>
@@ -133,7 +115,6 @@
             <version>0.11.5</version>
             <scope>runtime</scope>
         </dependency>
->>>>>>> feature_MigracionesBD
 	</dependencies>
 	
 

@@ -20,7 +20,7 @@ public class AuthService {
 
     // Lógica de Registro
     public User register(User user) {
-        if (userRepository.findByUsername(user.getUsername()).isPresent()) {
+        if (userRepository.findByEmail(user.getEmail()).isPresent()) {
             throw new RuntimeException("El usuario ya existe");
         }
         user.setPassword(passwordEncoder.encode(user.getPassword()));
@@ -29,12 +29,12 @@ public class AuthService {
     }
 
     // Lógica de Login
-    public String login(String username, String password) {
-        User user = userRepository.findByUsername(username)
+    public String login(String email, String password) {
+        User user = userRepository.findByEmail(email)
                 .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
 
         if (passwordEncoder.matches(password, user.getPassword())) {
-            return jwtUtils.generateToken(username); // Retorna solo el token
+            return jwtUtils.generateToken(email);
         } else {
             throw new RuntimeException("Contraseña incorrecta");
         }

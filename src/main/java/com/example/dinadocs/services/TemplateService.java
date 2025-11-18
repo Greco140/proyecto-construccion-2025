@@ -137,6 +137,11 @@ public class TemplateService {
      */
     private List<String> extractPlaceholders(String htmlContent) {
         List<String> matches = new ArrayList<>();
+
+        if (htmlContent == null || htmlContent.isEmpty()) {
+            return matches;
+        }
+
         Pattern pattern = Pattern.compile("\\{\\{([^\\}]+)\\}\\}");
         Matcher matcher = pattern.matcher(htmlContent);
 
