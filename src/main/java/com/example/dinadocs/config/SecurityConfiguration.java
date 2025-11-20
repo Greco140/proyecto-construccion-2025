@@ -18,8 +18,6 @@ public class SecurityConfiguration {
      * Define la cadena de filtros de seguridad para la aplicación.
      * * Actualmente, esta configuración deshabilita CSRF (necesario para APIs REST sin 
      * sesiones de navegador) y permite el acceso público temporal a toda la ruta /api/** * durante la fase de desarrollo sin autenticación.
-     * * NOTA: Esta configuración debe ser ajustada en la Fase 2 para proteger la gestión 
-     * de plantillas y requerir tokens JWT en la mayoría de los endpoints /api/**.
      * * @param httpSecurity Objeto usado para configurar la seguridad a nivel de HTTP.
      * @return El objeto SecurityFilterChain configurado.
      * @throws Exception Si ocurre un error durante la construcción de la configuración de seguridad.
