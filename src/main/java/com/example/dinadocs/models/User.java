@@ -1,11 +1,12 @@
 package com.example.dinadocs.models;
 
-// Importación correcta para Spring Boot 3+
 import jakarta.persistence.*;
+import java.util.List;
 
 /**
- * Entidad JPA (Modelo) que representa la tabla 'usuarios'.
- * Basado en la sección 1.2 del "Contrato de API y especificación.md".
+ * Entidad JPA que representa a un usuario del sistema.
+ * Se identifica principalmente por su correo electrónico.
+ *
  */
 @Entity
 @Table(name = "usuarios")
@@ -28,7 +29,8 @@ public class User {
     @Column(nullable = false)
     private Role role;
 
-    // --- Constructores, Getters y Setters ---
+    @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Template> templates;
 
     public User() {}
 
@@ -42,10 +44,8 @@ public class User {
         return name;
     }
     public void setName(String name) {
-        this.name = name;
-    }
-    public String getEmail() {
-        return email;
+        this.name = name; }
+    public String getEmail() { return email;
     }
     public void setEmail(String email) {
         this.email = email;
@@ -61,5 +61,11 @@ public class User {
     }
     public void setRole(Role role) {
         this.role = role;
+    }
+    public List<Template> getTemplates() {
+        return templates;
+    }
+    public void setTemplates(List<Template> templates) {
+        this.templates = templates;
     }
 }
