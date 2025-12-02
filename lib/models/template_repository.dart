@@ -1,0 +1,47 @@
+import 'dart:typed_data';
+import 'package:dynadoc_front/models/generation_request.dart';
+import 'package:dynadoc_front/models/template.dart';
+import 'package:dynadoc_front/network/template_requests.dart';
+
+class TemplateRepository {
+  final TemplateRequests _requests = TemplateRequests();
+
+  List<Template> _templateList = [];
+
+  Future<List<Template>> getTemplateList() async {
+    if (_templateList.isEmpty) await refreshTemplates();
+    return _templateList;
+  }
+
+  Future<List<Template>> refreshTemplates() async {
+    try {
+      _templateList = await _requests.getTemplateList();
+      return _templateList;
+    } catch (e) {
+      print('Repo Error: $e');
+      return [];
+    }
+  }
+
+  Future<Template?> getTemplateById(int id) async {
+    return await _requests.getTemplateById(id);
+  }
+
+  Future<bool> createTemplate(String name, String content) async {
+    try {
+      await _requests.createTemplate(name, content);
+      await refreshTemplates();
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
+
+  Future<Uint8List?> generateDocument(
+    String templateType,
+    Map<String, Object> data,
+  ) async {
+    final request = GenerationRequest(templateType: templateType, data: data);
+    return await _requests.generateDocument(request);
+  }
+}
