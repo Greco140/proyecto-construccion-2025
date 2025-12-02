@@ -1,6 +1,6 @@
 import 'package:dynadoc_front/viewmodels/dashboard_view_model.dart';
-import 'package:dynadoc_front/views/Dashboard/new_template_widget.dart';
-import 'package:dynadoc_front/views/Dashboard/template_list_widget.dart';
+import 'package:dynadoc_front/views/Dashboard/new_template_view.dart';
+import 'package:dynadoc_front/views/Dashboard/template_list_view.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
