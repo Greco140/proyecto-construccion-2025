@@ -81,7 +81,6 @@ class TemplateListViewModel extends ChangeNotifier {
     _selectedTemplate = null;
     _templateFields.clear();
     _pdfDoc.clear();
-    clear()
     notifyListeners();
   }
 
