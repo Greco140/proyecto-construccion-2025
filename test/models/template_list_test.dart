@@ -43,6 +43,7 @@ void main() {
       final result = await templateList.createTemplate(
         'Test Template',
         'Template content here',
+        false,
       );
       expect(result, isA<bool>());
     });

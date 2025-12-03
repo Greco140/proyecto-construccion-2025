@@ -55,19 +55,18 @@ class TemplatesCarousel extends StatelessWidget {
                       child: FutureBuilder(
                         future: JwtKey().getUserRole(),
                         builder: (BuildContext context, role) {
-                          if (templates[index].isPublic ||
-                              role.data != 'ADMIN') {
-                            return IconButton(
-                              onPressed: () {},
-                              icon: Icon(Icons.close, color: Colors.grey),
-                            );
-                          } else {
+                          if (!templates[index].isPublic ||
+                              role.data == 'ADMIN') {
                             return IconButton(
                               onPressed: () {
                                 viewModel.deleteTemplate(templates[index]);
                               },
-
                               icon: Icon(Icons.close, color: Colors.red),
+                            );
+                          } else {
+                            return IconButton(
+                              onPressed: () {},
+                              icon: Icon(Icons.close, color: Colors.grey),
                             );
                           }
                         },

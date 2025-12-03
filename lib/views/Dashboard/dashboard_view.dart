@@ -43,8 +43,6 @@ class DashboardView extends StatelessWidget {
                     ),
                     TextButton(
                       onPressed: () {
-                        context.read()<TemplateListViewModel>().clear();
-                        context.read()<NewTemplateViewModel>().clear();
                         viewModel.setDashboardState(DashboardState.lista);
                       },
                       child: Text(
@@ -58,8 +56,6 @@ class DashboardView extends StatelessWidget {
                     TextButton(
                       onPressed: () {
                         viewModel.setDashboardState(DashboardState.crear);
-                        context.read()<TemplateListViewModel>().clear();
-                        context.read()<NewTemplateViewModel>().clear();
                       },
                       child: Text(
                         "Crear plantilla",
@@ -74,8 +70,6 @@ class DashboardView extends StatelessWidget {
                 IconButton(
                   onPressed: () {
                     viewModel.logout();
-                    context.read()<TemplateListViewModel>().clear();
-                    context.read()<NewTemplateViewModel>().clear();
                     Navigator.popAndPushNamed(context, "/login");
                   },
                   icon: Icon(Icons.exit_to_app, color: Colors.white),
@@ -87,9 +81,15 @@ class DashboardView extends StatelessWidget {
             builder: (BuildContext context) {
               switch (viewModel.getDashboardState()) {
                 case DashboardState.lista:
-                  return TemplateListWidget();
+                  return ChangeNotifierProvider(
+                    create: (_) => TemplateListViewModel(),
+                    child: TemplateListWidget(),
+                  );
                 case DashboardState.crear:
-                  return NewTemplateWidget();
+                  return ChangeNotifierProvider(
+                    create: (_) => NewTemplateViewModel(),
+                    child: NewTemplateWidget(),
+                  );
               }
             },
           ),

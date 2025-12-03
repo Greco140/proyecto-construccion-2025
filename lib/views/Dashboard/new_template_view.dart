@@ -1,3 +1,5 @@
+import 'package:dynadoc_front/network/jwt_key.dart';
+import 'package:dynadoc_front/viewmodels/dashboard_view_model.dart';
 import 'package:dynadoc_front/viewmodels/new_template_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -101,47 +103,76 @@ class NewTemplateWidget extends StatelessWidget {
                 // SAVE BUTTON
                 SizedBox(
                   height: 55,
-                  child: ElevatedButton.icon(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.purple,
-                      foregroundColor: Colors.white,
-                      elevation: 5,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                    ),
-                    onPressed: () async {
-                      // Call ViewModel
-                      bool success = await viewModel.createTemplate();
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: ElevatedButton.icon(
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.purple,
+                            foregroundColor: Colors.white,
+                            elevation: 5,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                          ),
+                          onPressed: () async {
+                            // Call ViewModel
+                            bool success = await viewModel.createTemplate();
 
-                      if (context.mounted) {
-                        if (success) {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(
-                              content: Text("Plantilla creada exitosamente"),
-                              backgroundColor: Colors.green,
+                            if (context.mounted) {
+                              if (success) {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(
+                                    content: Text(
+                                      "Plantilla creada exitosamente",
+                                    ),
+                                    backgroundColor: Colors.green,
+                                  ),
+                                );
+                                viewModel.clear();
+                              } else {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(
+                                    content: Text(
+                                      "Error: El nombre y el contenido son obligatorios",
+                                    ),
+                                    backgroundColor: Colors.red,
+                                  ),
+                                );
+                              }
+                            }
+                          },
+                          icon: const Icon(Icons.save_as, size: 28),
+                          label: const Text(
+                            "GUARDAR PLANTILLA",
+                            style: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
                             ),
-                          );
-                        } else {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(
-                              content: Text(
-                                "Error: El nombre y el contenido son obligatorios",
-                              ),
-                              backgroundColor: Colors.red,
-                            ),
-                          );
-                        }
-                      }
-                    },
-                    icon: const Icon(Icons.save_as, size: 28),
-                    label: const Text(
-                      "GUARDAR PLANTILLA",
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
+                          ),
+                        ),
                       ),
-                    ),
+                      FutureBuilder(
+                        future: JwtKey().getUserRole(),
+                        builder: (BuildContext context, snapshot) {
+                          if (snapshot.data == 'ADMIN') {
+                            return Row(
+                              children: [
+                                Checkbox(
+                                  value: viewModel.isPublic,
+                                  onChanged: (bool? newValue) => viewModel
+                                      .setCreateAsPublic(newValue ?? false),
+                                  semanticLabel: 'Crear como pública',
+                                ),
+                                const Text('Crear como pública'),
+                              ],
+                            );
+                          } else {
+                            return const SizedBox.shrink();
+                          }
+                        },
+                      ),
+                    ],
                   ),
                 ),
               ],

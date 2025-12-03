@@ -16,6 +16,7 @@ class DashboardViewModel extends ChangeNotifier {
   }
 
   void logout() {
+    _dashState = DashboardState.lista;
     JwtKey().clear();
   }
 }

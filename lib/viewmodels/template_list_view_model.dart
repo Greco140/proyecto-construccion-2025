@@ -28,6 +28,7 @@ class TemplateListViewModel extends ChangeNotifier {
     );
 
     _templateFields.generateFields(rawFields);
+    _selectedTemplate = template;
 
     notifyListeners();
   }
@@ -74,6 +75,7 @@ class TemplateListViewModel extends ChangeNotifier {
   Future<bool> deleteTemplate(Template template) async {
     bool result = await _templateList.deleteTemplate(template);
     clear();
+    notifyListeners();
     return result;
   }
 
@@ -81,7 +83,6 @@ class TemplateListViewModel extends ChangeNotifier {
     _selectedTemplate = null;
     _templateFields.clear();
     _pdfDoc.clear();
-    notifyListeners();
   }
 
   Future<void> downloadPdf() async {

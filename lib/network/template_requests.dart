@@ -14,8 +14,12 @@ class TemplateRequests extends HttpRequest {
     return Template.fromJson(json);
   }
 
-  Future<Template> createTemplate(String name, String content) async {
-    final body = {'name': name, 'content': content, 'isPublic': false};
+  Future<Template> createTemplate(
+    String name,
+    String content,
+    bool isPublic,
+  ) async {
+    final body = {'name': name, 'content': content, 'isPublic': isPublic};
     final json = await sendPostRequest('templates', body);
     return Template.fromJson(json);
   }

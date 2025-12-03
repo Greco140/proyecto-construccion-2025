@@ -27,9 +27,13 @@ class TemplateList {
     return await _requests.getTemplateById(id);
   }
 
-  Future<bool> createTemplate(String name, String content) async {
+  Future<bool> createTemplate(
+    String name,
+    String content,
+    bool isPublic,
+  ) async {
     try {
-      await _requests.createTemplate(name, content);
+      await _requests.createTemplate(name, content, isPublic);
       await refreshTemplates();
       return true;
     } catch (e) {

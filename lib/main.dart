@@ -22,8 +22,6 @@ class MyApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(create: (_) => LoginViewModel()),
         ChangeNotifierProvider(create: (_) => DashboardViewModel()),
-        ChangeNotifierProvider(create: (_) => NewTemplateViewModel()),
-        ChangeNotifierProvider(create: (_) => TemplateListViewModel()),
       ],
       child: MaterialApp(
         title: 'DynaDocs',
