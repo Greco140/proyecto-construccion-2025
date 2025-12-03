@@ -1,4 +1,4 @@
-import 'package:dynadoc_front/viewmodels/template_fields.dart';
+import 'package:dynadoc_front/viewmodels/dashboard_components/template_field.dart';
 import 'package:dynadoc_front/viewmodels/template_list_view_model.dart';
 import 'package:flutter/material.dart';
 
@@ -14,7 +14,7 @@ class DynamicFieldWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final rows = viewModel.getLoopRows(field.name);
+    final rows = viewModel.getLoopRows(field.getName());
 
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 10),
@@ -31,7 +31,7 @@ class DynamicFieldWidget extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                field.name.toUpperCase(),
+                field.getName().toUpperCase(),
                 style: const TextStyle(
                   fontWeight: FontWeight.bold,
                   color: Colors.purple,
@@ -40,7 +40,7 @@ class DynamicFieldWidget extends StatelessWidget {
               IconButton(
                 icon: const Icon(Icons.add_circle, color: Colors.purple),
                 onPressed: () =>
-                    viewModel.addLoopRow(field.name, field.children),
+                    viewModel.addLoopRow(field.getName(), field.getChildren()),
                 tooltip: "Agregar item",
               ),
             ],
@@ -58,8 +58,10 @@ class DynamicFieldWidget extends StatelessWidget {
                       Align(
                         alignment: Alignment.centerRight,
                         child: InkWell(
-                          onTap: () =>
-                              viewModel.removeLoopRow(field.name, rowIndex),
+                          onTap: () => viewModel.removeLoopRow(
+                            field.getName(),
+                            rowIndex,
+                          ),
                           child: const Icon(
                             Icons.close,
                             size: 16,

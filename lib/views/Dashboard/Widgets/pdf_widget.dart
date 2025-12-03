@@ -42,15 +42,28 @@ class PdfViewer extends StatelessWidget {
           ),
         ),
         if (viewModel.pdfController != null)
-          PdfPageNumber(
-            controller: viewModel.pdfController!,
-            builder: (_, state, page, pagesCount) => Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Text(
-                'Página $page de ${pagesCount ?? 0}',
-                style: const TextStyle(fontSize: 16),
+          Row(
+            children: [
+              PdfPageNumber(
+                controller: viewModel.pdfController!,
+                builder: (_, state, page, pagesCount) => Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(
+                    'Página $page de ${pagesCount ?? 0}',
+                    style: const TextStyle(fontSize: 16),
+                  ),
+                ),
               ),
-            ),
+              ElevatedButton.icon(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.green, // Green for download
+                  foregroundColor: Colors.white,
+                ),
+                onPressed: () => viewModel.downloadPdf(),
+                icon: const Icon(Icons.download),
+                label: const Text("Descargar"),
+              ),
+            ],
           ),
       ],
     );

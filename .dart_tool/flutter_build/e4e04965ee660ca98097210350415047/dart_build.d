@@ -1,0 +1,1 @@
+ /home/hjanssen/Documents/UADY/Semestre\ 5/Construccion/Proyecto/front/proyecto-construccion-2025/.dart_tool/flutter_build/e4e04965ee660ca98097210350415047/dart_build_result.json: 

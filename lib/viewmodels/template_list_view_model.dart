@@ -1,29 +1,27 @@
 import 'dart:typed_data';
-import 'package:dynadoc_front/viewmodels/template_fields.dart';
+import 'package:dynadoc_front/models/pdf_doc.dart';
+import 'package:dynadoc_front/viewmodels/dashboard_components/template_fields_list.dart';
 import 'package:flutter/material.dart';
-import 'package:pdfx/pdfx.dart';
 import 'package:dynadoc_front/models/template.dart';
-import 'package:dynadoc_front/models/template_repository.dart';
+import 'package:dynadoc_front/models/template_list.dart';
+import 'package:pdfx/pdfx.dart';
 
 class TemplateListViewModel extends ChangeNotifier {
-  final TemplateRepository _repository = TemplateRepository();
-
+  final TemplateList _templateList = TemplateList();
+  final PdfDoc _pdfDoc = PdfDoc();
+  final TemplateFieldsList _templateFields = TemplateFieldsList();
   Template? _selectedTemplate;
-  PdfController? _pdfController;
   bool _isLoading = false;
-  final TemplateFields _templateFields = TemplateFields();
 
+  //getters
+  Future<List<Template>> getTemplateList() => _templateList.getTemplateList();
   Template? get selectedTemplate => _selectedTemplate;
-  PdfController? get pdfController => _pdfController;
   bool get isLoading => _isLoading;
-  TemplateFields get templateFields => _templateFields;
-
-  Future<List<Template>> getTemplateList() => _repository.getTemplateList();
+  TemplateFieldsList get templateFields => _templateFields;
+  PdfController? get pdfController => _pdfDoc.getPdfController();
 
   void selectTemplate(Template template) {
-    _selectedTemplate = template;
-    _templateFields.clear();
-    _pdfController = null;
+    clear();
 
     List<String> rawFields = List<String>.from(
       template.fields.map((f) => f.getName()),
@@ -39,32 +37,31 @@ class TemplateListViewModel extends ChangeNotifier {
   }
 
   void addLoopRow(String sectionName, List<String> childFields) {
-    _templateFields.addLoopRow(sectionName, childFields);
+    _templateFields.addDynamicRow(sectionName, childFields);
     notifyListeners();
   }
 
   void removeLoopRow(String sectionName, int index) {
-    _templateFields.removeLoopRow(sectionName, index);
+    _templateFields.removeDynamicRow(sectionName, index);
     notifyListeners();
   }
 
   Future<void> generateDocument() async {
     if (_selectedTemplate == null) return;
     _isLoading = true;
+    _pdfDoc.clear();
     notifyListeners();
-
+    //Obtenemos datos de la plantilla y generamos documento
     try {
       Map<String, Object> data = _templateFields.getFieldsAsMap();
 
-      final Uint8List? pdfBytes = await _repository.generateDocument(
+      final Uint8List? pdfBytes = await _templateList.generateDocument(
         _selectedTemplate!.name,
         data,
       );
-
+      //Guardamos pdf en el modelo
       if (pdfBytes != null) {
-        _pdfController = PdfController(
-          document: PdfDocument.openData(pdfBytes),
-        );
+        _pdfDoc.setPdf(pdfBytes);
       }
     } catch (e) {
       print("Error: $e");
@@ -72,5 +69,24 @@ class TemplateListViewModel extends ChangeNotifier {
       _isLoading = false;
       notifyListeners();
     }
+  }
+
+  Future<bool> deleteTemplate(Template template) async {
+    bool result = await _templateList.deleteTemplate(template);
+    clear();
+    return result;
+  }
+
+  void clear() {
+    _selectedTemplate = null;
+    _templateFields.clear();
+    _pdfDoc.clear();
+    clear()
+    notifyListeners();
+  }
+
+  Future<void> downloadPdf() async {
+    await generateDocument();
+    await _pdfDoc.downloadPdf(_selectedTemplate!.name);
   }
 }

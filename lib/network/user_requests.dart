@@ -12,7 +12,7 @@ class UserRequests extends HttpRequest {
 
       // Save token to Singleton
       if (response['token'] != null) {
-        JwtKey().setJwtKey(response['token']);
+        JwtKey().setJwtKeyAndRole(response['token'], response['role']);
         return true;
       }
       return false;

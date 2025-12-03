@@ -41,10 +41,10 @@ class FieldsList extends StatelessWidget {
                             padding: const EdgeInsets.symmetric(vertical: 8.0),
                             child: TextField(
                               controller: fieldList.getSimpleController(
-                                item.name,
+                                item.getName(),
                               ),
                               decoration: InputDecoration(
-                                labelText: item.name,
+                                labelText: item.getName(),
                                 border: const OutlineInputBorder(),
                                 filled: true,
                               ),

@@ -1,4 +1,5 @@
 import 'package:dynadoc_front/models/template.dart';
+import 'package:dynadoc_front/network/jwt_key.dart';
 import 'package:dynadoc_front/viewmodels/template_list_view_model.dart';
 import 'package:flutter/material.dart';
 
@@ -25,23 +26,54 @@ class TemplatesCarousel extends StatelessWidget {
 
           return GridView.builder(
             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 2,
-              childAspectRatio: 2,
+              crossAxisCount: 1,
+              childAspectRatio: 5,
             ),
             itemCount: templates.length,
             itemBuilder: (context, index) {
               return Card(
-                child: TextButton(
-                  onPressed: () {
-                    viewModel.selectTemplate(templates[index]);
-                  },
-                  child: Padding(
-                    padding: const EdgeInsets.all(15),
-                    child: Text(
-                      templates[index].name,
-                      textAlign: TextAlign.center,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Expanded(
+                      child: TextButton(
+                        onPressed: () {
+                          viewModel.selectTemplate(templates[index]);
+                        },
+                        child: Padding(
+                          padding: const EdgeInsets.all(15),
+                          child: Text(
+                            templates[index].name,
+                            textAlign: TextAlign.center,
+                          ),
+                        ),
+                      ),
                     ),
-                  ),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: FutureBuilder(
+                        future: JwtKey().getUserRole(),
+                        builder: (BuildContext context, role) {
+                          if (templates[index].isPublic ||
+                              role.data != 'ADMIN') {
+                            return IconButton(
+                              onPressed: () {},
+                              icon: Icon(Icons.close, color: Colors.grey),
+                            );
+                          } else {
+                            return IconButton(
+                              onPressed: () {
+                                viewModel.deleteTemplate(templates[index]);
+                              },
+
+                              icon: Icon(Icons.close, color: Colors.red),
+                            );
+                          }
+                        },
+                      ),
+                    ),
+                  ],
                 ),
               );
             },

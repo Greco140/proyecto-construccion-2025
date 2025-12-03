@@ -5,7 +5,7 @@ import 'jwt_key.dart';
 // Base class for all API requests
 abstract class HttpRequest {
   final String baseUrl =
-      'http://localhost:8080/api/'; // Adjust for your emulator/device
+      'https://dynadocs.onrender.com/api/'; // Adjust for your emulator/device
 
   Future<Map<String, String>> _getHeaders({bool isAuth = false}) async {
     final headers = {
