@@ -8,6 +8,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+
+import java.util.HashMap;
+import java.util.Map;
+
 @Service
 public class AuthService {
 
@@ -31,12 +35,16 @@ public class AuthService {
     }
 
     // Lógica de Login
-    public String login(String email, String password) {
+    public Map<String, Object> login(String email, String password) {
         User user = userRepository.findByEmail(email)
                 .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
 
         if (passwordEncoder.matches(password, user.getPassword())) {
-            return jwtUtils.generateToken(email);
+            String token = jwtUtils.generateToken(email);
+            Map<String, Object> response = new HashMap<>();
+            response.put("token", token);
+            response.put("role", user.getRole());
+            return response;
         } else {
             throw new RuntimeException("Contraseña incorrecta");
         }
