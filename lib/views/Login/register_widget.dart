@@ -81,6 +81,22 @@ class RegisterWidget extends StatelessWidget {
             ),
           ),
           Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+            child: DropdownButtonFormField(
+              items: [
+                DropdownMenuItem(value: "Usuario", child: Text("Usuario")),
+                DropdownMenuItem(value: "Creador", child: Text("Creador")),
+              ],
+              onChanged: (value) {
+                if (value == "Creador") {
+                  viewModel.setIsCreatorSelected(true);
+                } else {
+                  viewModel.setIsCreatorSelected(false);
+                }
+              },
+            ),
+          ),
+          Padding(
             padding: const EdgeInsets.all(15.0),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,

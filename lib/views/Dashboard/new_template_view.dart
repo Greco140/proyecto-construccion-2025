@@ -1,5 +1,4 @@
 import 'package:dynadoc_front/network/jwt_key.dart';
-import 'package:dynadoc_front/viewmodels/dashboard_view_model.dart';
 import 'package:dynadoc_front/viewmodels/new_template_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -155,7 +154,8 @@ class NewTemplateWidget extends StatelessWidget {
                       FutureBuilder(
                         future: JwtKey().getUserRole(),
                         builder: (BuildContext context, snapshot) {
-                          if (snapshot.data == 'ADMIN') {
+                          if (snapshot.data == 'ADMIN' ||
+                              snapshot.data == 'CREADOR') {
                             return Row(
                               children: [
                                 Checkbox(

@@ -9,6 +9,7 @@ class LoginViewModel extends ChangeNotifier {
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _passConfirmController = TextEditingController();
+  bool _isCreatorSelected = false;
 
   Future<bool> login() async {
     bool isFormValid = _formKey.currentState!.validate();
@@ -26,6 +27,7 @@ class LoginViewModel extends ChangeNotifier {
       User user = User(
         email: _emailController.text,
         name: _nameController.text,
+        role: _isCreatorSelected ? "CREADOR" : "USUARIO",
       );
 
       bool success = await user.register(_passwordController.text);
@@ -84,5 +86,9 @@ class LoginViewModel extends ChangeNotifier {
 
   TextEditingController getPassConfirmController() {
     return _passConfirmController;
+  }
+
+  void setIsCreatorSelected(bool isCreatorSelected) {
+    _isCreatorSelected = isCreatorSelected;
   }
 }
