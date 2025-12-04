@@ -205,12 +205,12 @@
 				<executions>
 					<execution>
 						<id>copy-javadoc-to-static</id>
-						<phase>prepare-package</phase>
+						<phase>process-classes</phase>
 						<goals>
 							<goal>copy-resources</goal>
 						</goals>
 						<configuration>
-							<outputDirectory>${project.build.directory}/classes/static/javadoc</outputDirectory>
+							<outputDirectory>${project.basedir}/src/main/resources/static/javadoc</outputDirectory>
 							<resources>
 								<resource>
 									<directory>${project.build.directory}/generated-docs/javadoc</directory>
