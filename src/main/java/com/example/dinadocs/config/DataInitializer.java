@@ -118,7 +118,7 @@ public class DataInitializer implements CommandLineRunner {
         if (userRepository.findByEmail("creator2@gmail.com").isEmpty()) {
             User creator = new User();
             creator.setName("Creador");
-            creator.setEmail("creator@gmail.com");
+            creator.setEmail("creator2@gmail.com");
             creator.setPassword(passwordEncoder.encode("creator123"));
             creator.setRole(Role.CREADOR);
             userRepository.save(creator);
@@ -128,7 +128,7 @@ public class DataInitializer implements CommandLineRunner {
         if (userRepository.findByEmail("creator3@gmail.com").isEmpty()) {
             User creator = new User();
             creator.setName("Creador");
-            creator.setEmail("creator@gmail.com");
+            creator.setEmail("creator3@gmail.com");
             creator.setPassword(passwordEncoder.encode("creator123"));
             creator.setRole(Role.CREADOR);
             userRepository.save(creator);
@@ -158,7 +158,7 @@ public class DataInitializer implements CommandLineRunner {
         createTemplateFromFile("Contrato de Servicios", "contrato-de-servicios-simple.html");
         createTemplateFromFile("Certificado de curso", "certificado.html");
         createTemplateFromFile("Orden de Compra", "orden-de-compra.html");
-        createTemplateFromFile("Orden de servicio tecnico"," orden-de-servicio.html");
+        createTemplateFromFile("Orden de servicio tecnico","orden-de-servicio.html");
     }
     
 }
