@@ -36,7 +36,7 @@ public class PdfController {
      * Recibe JSON, delega la lógica al servicio y devuelve el archivo binario.
      *
      * @param request El DTO (GenerationRequest) mapeado desde el JSON del body.
-     * @return ResponseEntity<byte[]> (El PDF) o un ResponseEntity de error.
+     * @return ResponseEntity con el PDF en bytes o un ResponseEntity de error.
      */
     @PostMapping("/generatePDF")
     public ResponseEntity<?> generateDocument(@RequestBody GenerationRequest request) {

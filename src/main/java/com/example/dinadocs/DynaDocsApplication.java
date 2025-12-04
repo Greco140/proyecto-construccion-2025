@@ -4,9 +4,30 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
 
+/**
+ * Clase principal de la aplicación DynaDocs.
+ * Plataforma para la creación y reutilización de plantillas personalizadas de documentos PDF.
+ * 
+ * <p>Características principales:
+ * <ul>
+ *   <li>Gestión de plantillas con control de acceso basado en roles</li>
+ *   <li>Generación dinámica de PDFs desde plantillas HTML</li>
+ *   <li>Autenticación JWT stateless</li>
+ *   <li>API REST completa para integración con frontends</li>
+ * </ul>
+ * 
+ * @author DynaDocs Team
+ * @version 1.0
+ * @since 2025-12-03
+ */
 @SpringBootApplication
 public class DynaDocsApplication {
 
+	/**
+	 * Método principal que inicia la aplicación Spring Boot.
+	 * 
+	 * @param args Argumentos de línea de comandos.
+	 */
 	public static void main(String[] args) {
 		SpringApplication.run(DynaDocsApplication.class, args);
 	}

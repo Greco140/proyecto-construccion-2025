@@ -168,6 +168,59 @@
 					</excludes>
 				</configuration>
 			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<version>3.6.3</version>
+				<configuration>
+					<outputDirectory>${project.build.directory}/generated-docs/javadoc</outputDirectory>
+					<reportOutputDirectory>${project.build.directory}/generated-docs/javadoc</reportOutputDirectory>
+					<destDir>javadoc</destDir>
+					<show>public</show>
+					<nohelp>true</nohelp>
+					<encoding>UTF-8</encoding>
+					<docencoding>UTF-8</docencoding>
+					<charset>UTF-8</charset>
+					<windowtitle>DynaDocs API Documentation</windowtitle>
+					<doctitle>DynaDocs - API Documentation</doctitle>
+					<bottom>Copyright © 2025 DynaDocs Team. All rights reserved.</bottom>
+					<additionalOptions>
+						<additionalOption>-Xdoclint:none</additionalOption>
+					</additionalOptions>
+					<source>21</source>
+				</configuration>
+				<executions>
+					<execution>
+						<id>attach-javadocs</id>
+						<goals>
+							<goal>jar</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-resources-plugin</artifactId>
+				<version>3.3.1</version>
+				<executions>
+					<execution>
+						<id>copy-javadoc-to-static</id>
+						<phase>prepare-package</phase>
+						<goals>
+							<goal>copy-resources</goal>
+						</goals>
+						<configuration>
+							<outputDirectory>${project.build.directory}/classes/static/javadoc</outputDirectory>
+							<resources>
+								<resource>
+									<directory>${project.build.directory}/generated-docs/javadoc</directory>
+									<filtering>false</filtering>
+								</resource>
+							</resources>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
 		</plugins>
 	</build>
 
