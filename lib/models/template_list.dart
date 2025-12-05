@@ -41,6 +41,21 @@ class TemplateList {
     }
   }
 
+  Future<bool> updateTemplate(
+    Template template,
+    String name,
+    String content,
+    bool isPublic,
+  ) async {
+    try {
+      await _requests.updateTemplate(template.id!, name, content, isPublic);
+      await refreshTemplates();
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
+
   Future<bool> deleteTemplate(Template template) async {
     if (template.isPublic) return false;
     try {

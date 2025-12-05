@@ -1,7 +1,9 @@
 import 'package:dynadoc_front/network/jwt_key.dart';
 import 'package:dynadoc_front/viewmodels/dashboard_view_model.dart';
+import 'package:dynadoc_front/viewmodels/my_templates_view_model.dart';
 import 'package:dynadoc_front/viewmodels/new_template_view_model.dart';
 import 'package:dynadoc_front/viewmodels/template_list_view_model.dart';
+import 'package:dynadoc_front/views/Dashboard/my_templates_view.dart';
 import 'package:dynadoc_front/views/Dashboard/new_template_view.dart';
 import 'package:dynadoc_front/views/Dashboard/template_list_view.dart';
 import 'package:flutter/material.dart';
@@ -65,6 +67,18 @@ class DashboardView extends StatelessWidget {
                         ),
                       ),
                     ),
+                    TextButton(
+                      onPressed: () {
+                        viewModel.setDashboardState(DashboardState.editar);
+                      },
+                      child: Text(
+                        "Mis plantillas",
+                        style: TextStyle(
+                          color: Color.fromARGB(255, 255, 255, 255),
+                          fontSize: 20,
+                        ),
+                      ),
+                    ),
                   ],
                 ),
                 IconButton(
@@ -89,6 +103,11 @@ class DashboardView extends StatelessWidget {
                   return ChangeNotifierProvider(
                     create: (_) => NewTemplateViewModel(),
                     child: NewTemplateWidget(),
+                  );
+                case DashboardState.editar:
+                  return ChangeNotifierProvider(
+                    create: (_) => MyTemplatesViewModel(),
+                    child: MyTemplatesView(),
                   );
               }
             },

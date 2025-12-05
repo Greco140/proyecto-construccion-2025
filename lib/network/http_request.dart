@@ -61,6 +61,19 @@ abstract class HttpRequest {
     }
   }
 
+  Future<dynamic> sendPutRequest(
+    String endpoint,
+    dynamic body, {
+    bool auth = true,
+  }) async {
+    final response = await http.put(
+      Uri.parse('$baseUrl$endpoint'),
+      headers: await _getHeaders(isAuth: auth),
+      body: jsonEncode(body),
+    );
+    return _processResponse(response);
+  }
+
   Future<dynamic> sendDeleteRequest(String endpoint, {bool auth = true}) async {
     final response = await http.delete(
       Uri.parse('$baseUrl$endpoint'),

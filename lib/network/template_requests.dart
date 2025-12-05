@@ -42,4 +42,19 @@ class TemplateRequests extends HttpRequest {
       return false;
     }
   }
+
+  Future<bool> updateTemplate(
+    int id,
+    String name,
+    String content,
+    bool isPublic,
+  ) async {
+    final body = {'name': name, 'content': content, 'isPublic': isPublic};
+    try {
+      await sendPutRequest('templates/$id', body);
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
 }
